@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Takedown Notice</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
+        }
+        .separator {
+            border-top: 1px solid rgba(255, 255, 255, 0.4); /* Garis separator */
+            margin: 20px 0; /* Spasi atas dan bawah */
+        }
+        .footer-info {
+            font-size: 0.9rem;
+            color: rgba(0, 0, 0, 0.8); /* Warna hitam dengan opacity 80% */
+            margin-top: 30px;
+            text-align: center;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+        }
+        .footer-link {
+            color: black; /* Warna hitam untuk link */
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center h-screen flex-col">
+
+    <div class="flex flex-col md:flex-row items-center justify-between w-[80vw] px-8 py-12">
+        <!-- Gambar di kiri, mengambil 50% di desktop, full width di mobile -->
+        <div class="flex-shrink-0 w-full md:w-1/2">
+            <img src="https://raw.githubusercontent.com/srv-kevinchr/public/refs/heads/main/web-down.svg" alt="Website down" class="w-full h-auto">
+        </div>
+
+        <!-- Teks di kanan, mengambil 50% di desktop, full width di mobile -->
+        <div class="mt-8 md:mt-0 md:ml-12 w-full md:w-1/2"> <!-- Margin kiri ditambah untuk memberikan jarak di desktop -->
+            <!-- Heading Error 451 di atas paragraf -->
+            <h1 class="text-2xl md:text-4xl font-bold text-red-600 mb-6 text-center md:text-right">Error 451 - Unavailable For Legal Reasons</h1>
+            
+            <p class="text-sm md:text-base font-semibold text-gray-800 mb-4">
+                <span class="block text-base font-bold">Important Notice:</span>
+                The website you are trying to access is currently unavailable. If you suspect the configuration is incorrect or there are other technical issues, please contact the hosting service provider's administrator for further assistance.
+            </p>
+
+            <!-- Separator Line -->
+            <div class="separator"></div>
+
+            <p class="text-sm md:text-base font-semibold text-gray-700 mt-4">
+                <span class="block text-base font-bold">Pemberitahuan Penting:</span>
+                Website yang Anda tuju saat ini tidak dapat diakses. Jika Anda menduga adanya kesalahan konfigurasi atau masalah teknis lainnya, harap segera menghubungi administrator penyedia layanan hosting untuk mendapatkan penanganan lebih lanjut.
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer Information Section -->
+    <div class="footer-info">
+        <p><span id="current-time">Loading...</span></p>
+        <p>Your IP: <span id="ip-address">Loading...</span> ・ Hosted by <a href="https://kevinchr.com" target="_blank" class="footer-link">kevinchr.com</a></p>
+    </div>
+
+    <script>
+
+        // Fetch IP address using the provided API
+        fetch('https://sp-dir.uwn.com/api/v1/ip')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('ip-address').textContent = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP data:', error);
+                document.getElementById('ip-address').textContent = 'Unable to fetch IP address';
+            });
+
+        // Use JavaScript to fetch the time from NTP server like Cloudflare
+        function getUTCDate() {
+            const now = new Date();
+            const utcDate = now.toISOString().slice(0, 19).replace("T", " ") + " UTC";
+            return utcDate;
+        }
+
+        // Display the timestamp in the footer
+        document.getElementById('current-time').textContent = getUTCDate();
+    </script>
+
+</body>
+</html>
